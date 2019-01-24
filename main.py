@@ -66,7 +66,7 @@ def bot():
             print('বিদায়।')
             break
         elif user_input in ['দুর হও', 'আমি আর তোমার সাথে কথা বলতে চাই না', 'বন্দো হয়ে যাও']:
-            print('ভালো থাকবেন।')
+            print('ভালো থাকবেন।')   
             break
 
         else:
