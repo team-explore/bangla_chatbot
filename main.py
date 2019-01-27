@@ -1,92 +1,69 @@
-import datetime
-import random
-def bot():
-    print("Bot: আপনাকে স্বাগত।")
+import chat
+import sys, time, datetime
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtCore import Qt
 
-    while(True):
+class Window(QWidget):
+    def __init__(self):
+        super(Window, self).__init__()
+        self.initUI()
 
-        user_input = input('Me: ')
-        print('Bot:', end=' ')
+    def initUI(self):
+        # Main Window
+        self.setGeometry(400, 100, 700, 500)
+        self.setWindowTitle('বাংলা ইন্টেলিজেন্ট চ্যাটবট')
+        self.setWindowIcon(QIcon('image/icon.png'))
+        self.setFixedSize(self.size())
 
-        if user_input in ['ধন্যবাদ', 'আপনাকে ধন্যবাদ']:
-            print('আপনাকে কিভাবে সাহায্য করতে পারি?\n')
+        #Main Layout
+        mainVBox = QVBoxLayout()
+        self.setLayout(mainVBox)
 
-        elif user_input in ['তোমার নাম কি', 'তোমার নাম বল', 'তুমি কে', 'কে তুমি', 'নাম কি', 'কি নাম', 'আপনি কে', 'তুই কে']:
-            print('আমার নাম রোফিক আমাকে তৈরি করেছে Team-Explore. \n')
+        # Conversation Field
+        self.conversation = QTextEdit()
+        self.conversation.setFontPointSize(11)
+        self.conversation.setReadOnly(True)
+        mainVBox.addWidget(self.conversation)
 
-        elif user_input in ['তুমি কি কর', 'তোমার কাজ কি', 'তোমার উদ্দেশ্য কি', 'তুই কি করিস', 'কি করিস', 'কি করিস তুই']:
-            #print('আমার কাজ আপনাদের আনন্দ দেয়া ।\n')
-            print('আমার কাজ আপনাদের প্রশ্নের উত্তর  দেয়া ।\n')
-        elif user_input in ['তাই বুঝি', 'তাই বুজি', 'আপনি কি কি করতে পারবেন ?']:
-            print('সত্যি বলছি আপনাকে কিভাবে সাহায্য করতে পারি?')
+        # input Field & Button
+        hbox = QHBoxLayout()
+        self.inputText = QLineEdit()
+        self.inputText.setPlaceholderText("এখানে লিখুন।")
+        self.inputText.setMaxLength(60)
+        self.sendBtn = QPushButton('পাঠান')
+        self.clearBtn = QPushButton('মুছুন')
+        mainVBox.addWidget(self.inputText)
+        hbox.addWidget(self.clearBtn)
+        hbox.addWidget(self.sendBtn)
 
-        elif user_input in ['আজ কি বার', 'কি বার', 'আজকে কি বার']:
-            day = datetime.date.today()
-            day_no = day.weekday()
-            if day_no == 0:
-                print('আজ সোমবার')
-            elif day_no == 1:
-                print('আজ মঙ্গলবার')
-            elif day_no == 2:
-                print('আজ বুধবার')
-            elif day_no == 3:
-                print('আজ বৃহস্পতিবার')
-            elif day_no == 4:
-                print('আজ শুক্রবার')
-            elif day_no == 5:
-                print('আজ শনিবার')
-            elif day_no == 6:
-                print('আজ রবিবার')
+        mainVBox.addLayout(hbox)
 
-        elif user_input in ['তুমি কেমন আছ', 'কেমন আছো', 'আপনি কেমন আছেন', 'ভাল আছো', 'কি খবর', 'কেমন আছিস']:
-            print('আমি ভাল আছি। আমাকে প্রশ্ন করুন।')
+        # Button Press Handling
+        self.sendBtn.clicked.connect(self.btn_clk)
+        self.clearBtn.clicked.connect(self.btn_clk)
+        self.inputText.returnPressed.connect(self.sendBtn.click)
 
-        elif user_input in ['তুমি কি মানুষ']:
-            print('না। আমি ভার্চুয়াল এজেন্ট।')
-
-        elif user_input in ['বয়স কত', 'তোমার বয়স কত', 'আপনার বয়স কত', 'তোর বয়স কতো']:
-            print('এক দিন।')
-
-        elif user_input in ['তুমি ছেলে না মেয়ে', 'তুমি কি ছেলে', 'তুমি কি মেয়ে', 'তুই কি ছেলে', 'তুই কি মেয়ে']:
-            print('আমি মানুষ না।')
-
-        elif user_input in ['তুই ফালতু', 'তুমি ফালতু', 'বাল', ]:
-            print("মুখ সামলে কথা বলুন, আমি জানি আপনি অনেক সুন্দর করে কথা বলতে পারেন।")
-
-        elif user_input in ['এই টা খুবি ফালতু হয়েছে', 'কাজ করে না', 'কি সব করে রাখসে']:
-            print("Team-Explore চেষ্টা করবে আমাকে আরো আধুনিক করার।")
-
-        elif user_input in ['তুমি কি রোবট', 'তুমি কি']:
-            print('আমি একটি চ্যাটবট।')
-
-        elif user_input in ['তুমি কোথায় থাক', 'তোমার বাসা কই', 'তোমার ঠিকানা কি']:
-            print('আমি সব জায়গায় থাকি।')
-
-        elif user_input in ['exit','ভাল থাকবেন','বিদায়','আল্লাহাফেজ']:
-            print('বিদায়।')
-            break
-        elif user_input in ['দুর হও', 'আমি আর তোমার সাথে কথা বলতে চাই না', 'বন্দো হয়ে যাও']:
-            print('ভালো থাকবেন।')   
-            break
-
-        else:
-            rand = random.randint(0,4)
-
-            if rand == 0:
-                print('দুঃখিত। বুঝতে পারি নি। অন্য কিছ জিজ্ঞেস করুন।')
-
-            elif rand == 1:
-                print('দুঃখিত। মাথার উপর দিয়ে গেছে । আরেকবার জিজ্ঞেস করুন')
-
-            elif rand == 2:
-                print('দুঃখিত । আরেকবার জিজ্ঞেস করুন')
-
-            elif rand == 3:
-                print('দুঃখিত । আমার প্রোগ্রাম আপনার কথা বুঝছেনা । আনুগ্রহ পুরবক অন্য কিছ জিজ্ঞেস করুন ।')
-
+    def btn_clk(self):
+        sender = self.sender()
+        if sender.text() == 'মুছুন':
+            self.inputText.clear()
+        elif sender.text() == 'পাঠান':
+            if self.inputText.text() == '':
+                pass
             else:
-                print('দুঃখিত । এইটা আমার জ্ঞান এর বাইরে  । আনুগ্রহ পুরবক অন্য কিছু জিজ্ঞেস করুন।')
+                text = self.inputText.text()
+                self.inputText.clear()
+                self.conversation.setAlignment(Qt.AlignRight)
+                self.conversation.append(text + '\n')
+
+                reply = chat.chat(text)
+                self.conversation.setAlignment(Qt.AlignLeft)
+                self.conversation.append(reply)
 
 
 if __name__ == '__main__':
-    bot()
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
