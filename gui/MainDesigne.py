@@ -21,11 +21,11 @@ class Window(QWidget):
         self.lineedit.clear()
 
         self.textedit.setAlignment(Qt.AlignRight)
-        self.textedit.append(self.question + '\n')
+        self.textedit.append("Me\n"+self.question + '\n')
 
         reply = chat.chat(self.question)
         self.textedit.setAlignment(Qt.AlignLeft)
-        self.textedit.append(reply)
+        self.textedit.append("Chatboat\n"+reply)
 
     def mainLayout(self):
         layout = QVBoxLayout()
